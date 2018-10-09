@@ -18,7 +18,7 @@ class App extends Component {
       .map(() => false)
   }
   componentWillMount() {
-    fetch('http://demo4452328.mockable.io/property')
+    fetch('https://demo4452328.mockable.io/property')
       .then(response => response.json())
       .then(obj => this.setState({ houses: obj.data }));
     // Getting current rates
