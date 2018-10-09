@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import { Container } from 'semantic-ui-react';
-import { currencies, rooms } from './_constants'
+import { currencies, rooms } from './_constants';
+import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -18,20 +19,18 @@ class App extends Component {
       .map(() => false)
   }
   componentWillMount() {
-    fetch('https://demo4452328.mockable.io/property')
-      .then(response => response.json())
-      .then(obj => this.setState({ houses: obj.data }));
+    axios.get('https://demo4452328.mockable.io/property')
+      .then(response => this.setState({ houses: response.data.data }))
     // Getting current rates
-    fetch('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y')
-      .then(response => response.json())
-      .then(obj => {
+    axios.get('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y')
+      .then(response => {
         let rates = {
           "UAH_UAH": {
             val: 1
           },
-          ...obj
+          ...response.data
         }
-        this.setState({ rates })
+        this.setState({ rates });
       })
   }
   handleCurrencyChange = (e, { index }) => {
@@ -43,7 +42,6 @@ class App extends Component {
     })
   }
   handleRoomsChange = (e, { value }) => {
-    console.log(value);
     let newRooms = [...this.state.selectedRooms];
     newRooms[value] = !newRooms[value];
     this.setState({ selectedRooms: newRooms })
