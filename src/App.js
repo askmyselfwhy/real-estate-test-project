@@ -4,6 +4,8 @@ import Main from './components/Main';
 import { Container } from 'semantic-ui-react';
 import { currencies, rooms } from './_constants';
 import axios from 'axios';
+var Promise = require('es6-promise').Promise;
+// import es6- from 'es6-promise'
 
 class App extends Component {
   state = {
@@ -19,10 +21,10 @@ class App extends Component {
       .map(() => false)
   }
   componentWillMount() {
-    axios.get('https://demo4452328.mockable.io/property')
+    Promise.resolve(axios.get('https://demo4452328.mockable.io/property'))
       .then(response => this.setState({ houses: response.data.data }))
     // Getting current rates
-    axios.get('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y')
+    Promise.resolve(axios.get('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y'))
       .then(response => {
         let rates = {
           "UAH_UAH": {
