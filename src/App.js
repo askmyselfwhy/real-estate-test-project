@@ -4,8 +4,7 @@ import Main from './components/Main';
 import { Container } from 'semantic-ui-react';
 import { currencies, rooms } from './_constants';
 import axios from 'axios';
-var Promise = require('es6-promise').Promise;
-// import es6- from 'es6-promise'
+import _ from 'lodash';
 
 class App extends Component {
   state = {
@@ -17,14 +16,13 @@ class App extends Component {
     rating: 0,
     price1: Number.NEGATIVE_INFINITY,
     price2: Number.POSITIVE_INFINITY,
-    selectedRooms: Array.apply(null, Array(rooms.length))
-      .map(() => false)
+    selectedRooms: _.map(Array.apply(null, Array(rooms.length)), (item, index) => index === 0 ? true : false)
   }
   componentWillMount() {
-    Promise.resolve(axios.get('https://demo4452328.mockable.io/property'))
+    axios.get('https://demo4452328.mockable.io/property')
       .then(response => this.setState({ houses: response.data.data }))
     // Getting current rates
-    Promise.resolve(axios.get('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y'))
+    axios.get('https://free.currencyconverterapi.com/api/v6/convert?q=UAH_USD,UAH_EUR&compact=y')
       .then(response => {
         let rates = {
           "UAH_UAH": {
@@ -63,21 +61,20 @@ class App extends Component {
       rating: 0,
       price1: Number.NEGATIVE_INFINITY,
       price2: Number.POSITIVE_INFINITY,
-      selectedRooms: Array.apply(null, Array(rooms.length))
-        .map(() => false)
+      selectedRooms: _.map(Array.apply(null, Array(rooms.length)), (item, index) => index === 0 ? true : false)
     })
   }
   // Filtration methods
   filterByRating = (houses) => {
     let { rating } = this.state;
     if (rating > 0) {
-      return houses.filter(house => house.rating === rating)
+      return _.filter(houses, house => house.rating === rating)
     }
     return houses;
   }
   filterByPrice = (houses) => {
     let { price1, price2, rate } = this.state;
-    return houses.filter(house => house.price * rate >= price1 && house.price * rate <= price2)
+    return _.filter(houses, house => house.price * rate >= price1 && house.price * rate <= price2)
   }
   filterByRooms = (houses) => {
     let { selectedRooms } = this.state;
@@ -86,8 +83,8 @@ class App extends Component {
     for (let i = 1; i < selectedRooms.length; i++) {
       if (selectedRooms[i]) {
         let numberOfRooms = rooms[i].total_rooms;
-        newHouses = newHouses.concat([...houses]
-          .filter(item => item.total_rooms === numberOfRooms));
+        newHouses = newHouses.concat(
+          _.filter([...houses], item => item.total_rooms === numberOfRooms));
       }
     }
     return newHouses;
@@ -102,7 +99,7 @@ class App extends Component {
     }
     return (
       <Container>
-        <main className="main-layout">
+        <main className="layout">
           <Sidebar
             eventHandlers={
               {

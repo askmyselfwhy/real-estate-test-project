@@ -9,26 +9,24 @@ import {
   ModalHeader,
   ModalFooter
 } from 'reactstrap';
+import _ from 'lodash';
 
 class ModalCarousel extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.goToIndex = this.goToIndex.bind(this);
   }
-  next() {
+  next = () => {
     const nextIndex = this.state.activeIndex === this.props.items.length - 1 ? 0 : this.state.activeIndex + 1;
     this.setState({ activeIndex: nextIndex });
   }
 
-  previous() {
+  previous = () => {
     const nextIndex = this.state.activeIndex === 0 ? this.props.items.length - 1 : this.state.activeIndex - 1;
     this.setState({ activeIndex: nextIndex });
   }
 
-  goToIndex(newIndex) {
+  goToIndex = (newIndex) => {
     this.setState({ activeIndex: newIndex });
   }
   toggle = () => {
@@ -40,7 +38,7 @@ class ModalCarousel extends Component {
   render() {
     let { items, modalOpen } = this.props;
     const { activeIndex } = this.state;
-    let slides = items && items.map((item, index) =>
+    let slides = items && _.map(items, (item, index) =>
       <CarouselItem key={item}>
         <img src={item} alt={'house' + index} />
       </CarouselItem>

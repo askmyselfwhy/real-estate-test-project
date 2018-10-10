@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Rating, Checkbox, Menu, List, Input, Button } from 'semantic-ui-react';
-import { currencies, rooms } from '../_constants'
+import { currencies, rooms } from '../_constants';
+import _ from 'lodash';
 
 class Sidebar extends Component {
   state = {
@@ -32,7 +33,7 @@ class Sidebar extends Component {
           <div className="currency mb-default">
             <header>Валюта</header>
             <Menu>
-              {currencies.map((currency, index) =>
+              {_.map(currencies, (currency, index) =>
                 <Menu.Item
                   key={currency.name}
                   index={index}
@@ -47,7 +48,7 @@ class Sidebar extends Component {
           <div className="rooms mb-default">
             <header>Количество комнат</header>
             <List>
-              {rooms.map((room, index) =>
+              {_.map(rooms, (room, index) =>
                 <List.Item key={room.label}>
                   <Checkbox
                     label={room.label}
@@ -63,10 +64,22 @@ class Sidebar extends Component {
             <header>Цена</header>
             <div>
               <label>
-                От <Input fluid type="number" name="price1" onChange={handlePriceChange} />
+                От <Input
+                  fluid
+                  type="number"
+                  name="price1"
+                  min={0}
+                  step={10000}
+                  onChange={handlePriceChange} />
               </label>
               <label>
-                до <Input fluid type="number" name="price2" onChange={handlePriceChange} />
+                до <Input
+                  fluid
+                  type="number"
+                  name="price2"
+                  min={0}
+                  step={10000}
+                  onChange={handlePriceChange} />
               </label>
             </div>
           </div>

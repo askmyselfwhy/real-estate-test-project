@@ -4,12 +4,15 @@ body{
 }
 .main{
   margin-left: 10px;
-  background-color: #fff;
+}
+
+.layout{
+  display: grid !important;
+  padding: 1em;
+  grid-template-columns: 35% 65%;
 }
 
 .sidebar{
-  background-color: #fff;
-  /* box-shadow: 0 0 1px 0px #333; */
   border: 1px solid rgba(34,36,38,.15);
   border-radius: 4px;
   padding: 1em;
@@ -23,12 +26,7 @@ body{
 .sidebar .list{
   margin: 0;
 }
-.currency .ui.menu{
-  margin: 0;
-}
 .currency a{
-  flex: 1 !important;
-  justify-content: center;
   text-transform: uppercase !important;
 }
 .ui.menu{
@@ -43,12 +41,6 @@ body{
 .price div{
   display: flex;
   flex-direction: column;
-}
-
-.main-layout{
-  display: grid !important;
-  padding: 1em;
-  grid-template-columns: 35% 65%;
 }
 
 .mb-default{
@@ -68,18 +60,15 @@ body{
   border-radius: 4px;
   margin: 0px 0px .5em 0px !important;
 }
-
 .houses .item.house .info{
   padding: 0 1em;
 }
-
 .houses .item.house .info p{
   text-align: justify;
 }
 .houses .item.house .info .extra{
   text-align: right;
 }
-
 .houses .item.house .additional-info img{
   cursor: pointer;
   border: 1px solid transparent;
@@ -114,7 +103,7 @@ body{
 }
 
 @media (max-width: 711px){
-  .main-layout.container{
+  .layout{
     padding: .2em;
     margin: 0 !important;
   }
@@ -130,9 +119,9 @@ body{
   }
 }
 @media (max-width: 567px){
-
-  #house-search-form{
-    display: block;
+  .ui.container{
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .form-toggle-btn{
     display: block !important;
@@ -142,20 +131,16 @@ body{
     font-weight: 600;
     margin-bottom: .35em;
   }
-  .main-layout.container{
-    display: grid !important;
+  .layout{
     padding: .2em;
     margin: 0 !important;
-    grid-template-columns: 100%;
+    grid-template-columns: 100% !important;
   }
   .main{
     margin: 10px 0 0 0;
   }
   .dnone{
     display: none !important;
-  }
-  .dblock{
-    display: block !important;
   }
 }
 
